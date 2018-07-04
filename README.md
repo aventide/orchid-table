@@ -1,68 +1,21 @@
-# Parcel React App
+# Orchid Table
 
-[![dependencies](https://img.shields.io/david/miljan-fsd/parcel-react-app.svg)](https://david-dm.org/miljan-fsd/parcel-react-app) [![devDependencies](https://img.shields.io/david/dev/miljan-fsd/parcel-react-app.svg)](https://david-dm.org/miljan-fsd/parcel-react-app?type=dev) [![npmDownloads](https://img.shields.io/npm/dt/parcel-react-app.svg?style=flat)](https://www.npmjs.com/package/parcel-react-app)
-
-Create [React](https://github.com/facebook/react) apps using [Parcel](https://github.com/parcel-bundler/parcel) as build tool.
-
-## Table of Contents
-
-* [Getting Started](#getting-started)
-  * [Install](#install)
-  * [Usage](#usage)
-  * [Development](#development)
-  * [Production](#production)
-* [Formatting and Linting](#formatting-and-linting)
-  * [Formatting and Linting JS](#formatting-and-linting-js)
-  * [Formatting and Linting Styles](#formatting-and-linting-styles)
-* [Testing](#testing)
-* [License](#license)
-
-## Getting started
-
-### Install
-
-Install [parcel-react-app](https://www.npmjs.com/package/parcel-react-app) globally:
-
-```bash
-npm i -g parcel-react-app
-```
+A react based table component with the aim of sporting high configurability and convenient functionality, such as column sorting, row limit options, and styling.
 
 ### Usage
 
-To create a new app, run:
-
-```bash
-parcel-react-app new
-```
-
-First, you need to enter the name of the project (e.g. `my-app`), author of the project and then select the style type (`css`, [scss](https://github.com/sass/node-sass), [css-modules](https://github.com/css-modules/css-modules) or [styled-components](https://github.com/styled-components/styled-components)). This will create a folder `my-app` and install all dependencies. Folder structure (for css):
+To include this component in your app, copy `components/App.js` to somewhere in your source tree (such as `Table.js`) and import it within another component's source file. 
 
 ```
-my-app/
-|-- config/
-|   |-- jestSetup.js
-|-- public/
-|   |-- favicon.ico
-|   |-- index.html
-|-- src/
-|   |-- components/
-|   |   |-- App.js
-|   |   |-- App.test.js
-|   |-- images/
-|       |-- parceljs.png
-|       |-- reactjs.png
-|   |-- index.js
-|-- .babelrc
-|-- .eslintrc.json
-|-- .gitignore
-|-- .prettierrc
-|-- .stylelintrc
-|-- package-lock.json
-|-- package.json
-|-- README.md
+import Table from './Table'
 ```
+
+**Note**: At this moment in time, the `Table` component relies on `styled-components` for its styling solution. The plan is to decouple that at some point later, when I figure out how to do that well.
+
 
 ### Development
+
+This project was bootstrapped with [parcel-react-app](https://www.npmjs.com/package/parcel-react-app) and includes extra files for demonstration purposes. To see the table in action or contribute, follow the steps below.
 
 Start the development server run:
 
