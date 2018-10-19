@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { orderBy } from 'natural-orderby';
+
+// https://ionicons.com/
 
 const TableContainer = styled.table`
 
@@ -15,14 +18,23 @@ const TableContainer = styled.table`
     background-color: white;
     color: black;
     border-bottom: 2px solid black;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 0.5em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 0.5rem;
     cursor: pointer;
     &:hover{
       opacity: 0.8;
       background-color: var(--highlight-color);
       color: white;
+    }
+  }
+  
+  /* on small screen, hide some columns. Reveal the expand details column later */
+  th, td{
+    &:nth-child(n + 3){
+      @media (max-width: 600px) {
+        display: none;
+      } 
     }
   }
   
@@ -35,8 +47,8 @@ const TableContainer = styled.table`
   }
   
   td{
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     max-width: 100px;
   }
 `
@@ -44,9 +56,10 @@ const TableContainer = styled.table`
 const Page = styled.span`
   --highlight-color: ${props => props.color};
   margin: 5px;
-  padding: 3px;
+  padding: 3px 6px;
   border: 1px solid darkgrey;
   cursor: pointer;
+  font-weight: 600;
   &:hover{
     border: 1px solid var(--highlight-color);
     color: var(--highlight-color);
@@ -80,13 +93,28 @@ const DataRows = props => {
 
   return (
     <tbody>
-    {rows && rows.map((row, rowIndex) => rowIndex >= startIndex && rowIndex < (((startIndex / rowLimit) + 1) * rowLimit) &&
+      {rows && rows.map((row, rowIndex) => rowIndex >= startIndex && rowIndex < (((startIndex / rowLimit) + 1) * rowLimit) &&
       <tr key={rowIndex}>
-        {Object.values(getValidatedObject(row)).map(col => <td>{col}</td>)}
+        {Object.values(getValidatedObject(row)).map((col, colIndex) => <td  key={colIndex}>{col}</td>)}
+        <ExpandRow>more</ExpandRow>
       </tr>)}
     </tbody>
   )
 }
+
+const ExpandRowHeader = styled.th`
+  display: none;
+  @media (max-width: 600px) {
+    display: block !important;
+  }
+`
+
+const ExpandRow = styled.td`
+  display: none;
+  @media (max-width: 600px) {
+    display: block !important;
+  }
+`
 
 DataRows.propTypes = {
   rows: PropTypes.array,
@@ -111,9 +139,10 @@ class Table extends React.Component {
   }
 
   reorder = e => {
+
     const columnHeading = e.target.innerText.toLowerCase()
-    // note, you need a numerical value in the compare function, not boolean
-    const sortedRows = this.state.rows.sort((prevRow, nextRow) => prevRow[columnHeading] >= nextRow[columnHeading] ? 1 : -1)
+    const sortedRows = orderBy(this.state.rows, [v => v[columnHeading]])
+
     this.setState({
       rows: sortedRows
     })
@@ -142,10 +171,14 @@ class Table extends React.Component {
     return (
       <Fragment>
         <TableContainer color={color}>
-
-          <tr>
-            {columnHeadings.map(heading => <th key={heading} onClick={this.reorder}>{heading}</th>)}
-          </tr>
+          <thead>
+            <tr>
+              {columnHeadings.map(heading => <th key={heading} onClick={this.reorder}>{heading}</th>)}
+              <ExpandRowHeader>
+                More
+              </ExpandRowHeader>
+            </tr>
+          </thead>
           <DataRows
             rows={this.state.rows}
             rowLimit={this.state.rowLimit}
