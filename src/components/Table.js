@@ -140,7 +140,7 @@ class Table extends React.Component {
 
   reorder = e => {
 
-    const columnHeading = e.target.innerText.toLowerCase()
+    const columnHeading = e.target.textContent.toLowerCase()
     const sortedRows = orderBy(this.state.rows, [v => v[columnHeading]])
 
     this.setState({
