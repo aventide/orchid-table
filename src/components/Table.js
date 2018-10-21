@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { orderBy } from 'natural-orderby';
+import { orderBy } from 'natural-orderby'
 
 // https://ionicons.com/
 
@@ -10,9 +10,9 @@ const TableContainer = styled.table`
   --highlight-color: ${props => props.color};
   width: calc(100% - 20px);
   text-align: left;
-  border-collapse: collapse;
   border-bottom: 2px solid black;
   word-wrap: break-word;
+  border-spacing: 0;
   
   th{
     background-color: white;
@@ -93,10 +93,10 @@ const DataRows = props => {
 
   return (
     <tbody>
-      {rows && rows.map((row, rowIndex) => rowIndex >= startIndex && rowIndex < (((startIndex / rowLimit) + 1) * rowLimit) &&
+    {rows && rows.map((row, rowIndex) => rowIndex >= startIndex && rowIndex < (((startIndex / rowLimit) + 1) * rowLimit) &&
       <tr key={rowIndex}>
-        {Object.values(getValidatedObject(row)).map((col, colIndex) => <td  key={colIndex}>{col}</td>)}
-        <ExpandRow>more</ExpandRow>
+        {Object.values(getValidatedObject(row)).map((col, colIndex) => <td key={colIndex}>{col}</td>)}
+        <ExpandRow>.</ExpandRow>
       </tr>)}
     </tbody>
   )
@@ -172,12 +172,12 @@ class Table extends React.Component {
       <Fragment>
         <TableContainer color={color}>
           <thead>
-            <tr>
-              {columnHeadings.map(heading => <th key={heading} onClick={this.reorder}>{heading}</th>)}
-              <ExpandRowHeader>
-                More
-              </ExpandRowHeader>
-            </tr>
+          <tr>
+            {columnHeadings.map(heading => <th key={heading} onClick={this.reorder}>{heading}</th>)}
+            <ExpandRowHeader>
+              *
+            </ExpandRowHeader>
+          </tr>
           </thead>
           <DataRows
             rows={this.state.rows}
